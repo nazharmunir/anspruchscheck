@@ -22,17 +22,15 @@ export default function PrivacyPage() {
           <address className="legal-address">
             <strong>Muhammad Mazhar Munir</strong>
             <br />
-            Hamburg, Deutschland
+            Hammerbrookstraße 42A
+            <br />
+            20097 Hamburg, Deutschland
             <br />
             E-Mail:{" "}
             <a className="text-link" href="mailto:mazhar.munir1233@gmail.com">
               mazhar.munir1233@gmail.com
             </a>
           </address>
-          <p className="legal-note">
-            Die vollständige postalische Anschrift muss vor einer geschäftsmäßigen
-            Vermarktung ergänzt werden.
-          </p>
 
           <h2>2. Leistungs-Check und lokale Speicherung</h2>
           <p>

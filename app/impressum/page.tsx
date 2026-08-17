@@ -14,8 +14,15 @@ export default function ImprintPage() {
           <h1>Impressum</h1>
           <div className="legal-callout">
             <strong>MVP-Testversion</strong>
-            <p>Diese Website befindet sich in einer nicht kommerziellen Testphase. Vor einer öffentlichen Vermarktung müssen hier Name, ladungsfähige Anschrift und eine direkte Kontaktmöglichkeit des verantwortlichen Anbieters ergänzt werden.</p>
+            <p>Diese Website befindet sich in einer nicht kommerziellen Testphase. Vor einer öffentlichen Vermarktung müssen hier noch der vollständige Name und eine ladungsfähige Anschrift des verantwortlichen Anbieters ergänzt werden.</p>
           </div>
+          <h2>Kontakt</h2>
+          <p>
+            E-Mail:{" "}
+            <a className="text-link" href="mailto:mazhar.munir1233@gmail.com">
+              mazhar.munir1233@gmail.com
+            </a>
+          </p>
           <h2>Inhaltliche Verantwortung</h2>
           <p>Die Inhalte dienen der unverbindlichen Erstorientierung. Anspruch ist keine Behörde, Kanzlei oder Sozialberatung und trifft keine Entscheidung über Leistungsansprüche.</p>
           <h2>Haftung für Inhalte und Links</h2>

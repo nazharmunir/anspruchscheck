@@ -30,7 +30,15 @@ export default function PrivacyPage() {
           <p>Wenn du eine offizielle Behördenseite öffnest, gelten dort die Datenschutzbestimmungen des jeweiligen Anbieters. Externe Seiten öffnen sich erst durch deine aktive Auswahl.</p>
 
           <h2>Deine Rechte und Kontakt</h2>
-          <p>Du hast im gesetzlichen Rahmen insbesondere Rechte auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung. Die verantwortliche Kontaktstelle wird mit den vollständigen Anbieterangaben vor der öffentlichen Vermarktung ergänzt.</p>
+          <p>
+            Du hast im gesetzlichen Rahmen insbesondere Rechte auf Auskunft,
+            Berichtigung, Löschung und Einschränkung der Verarbeitung.
+            Datenschutzanfragen kannst du an{" "}
+            <a className="text-link" href="mailto:mazhar.munir1233@gmail.com">
+              mazhar.munir1233@gmail.com
+            </a>{" "}
+            richten.
+          </p>
         </div>
       </main>
       <SiteFooter />

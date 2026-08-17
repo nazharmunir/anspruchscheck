@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import {
+  ageInYears,
   defaultProfile,
+  isValidBirthDate,
   loadProfile,
   saveProfile,
+  type ChildcareSituation,
   type ExistingBenefit,
   type Profile,
-  type YoungestAge,
 } from "../../lib/profile";
 
 const TOTAL_STEPS = 7;
@@ -45,15 +47,15 @@ function YesNo({
   yes = "Ja",
   no = "Nein",
 }: {
-  value: boolean;
+  value: boolean | null;
   onChange: (value: boolean) => void;
   yes?: string;
   no?: string;
 }) {
   return (
     <div className="option-grid">
-      <Choice selected={value} label={yes} onClick={() => onChange(true)} />
-      <Choice selected={!value} label={no} onClick={() => onChange(false)} />
+      <Choice selected={value === true} label={yes} onClick={() => onChange(true)} />
+      <Choice selected={value === false} label={no} onClick={() => onChange(false)} />
     </div>
   );
 }
@@ -80,9 +82,41 @@ export function CheckClient() {
     setProfile((current) => ({
       ...current,
       children: value,
-      youngestAge: value === 0 ? "none" : current.youngestAge === "none" ? "under1" : current.youngestAge,
-      singleParent: value === 0 ? false : current.singleParent,
-      missingSupport: value === 0 ? false : current.missingSupport,
+      childBirthDates:
+        value === 0
+          ? []
+          : Array.from({ length: value }, (_, index) => current.childBirthDates[index] ?? ""),
+      hasAdultChildInEducation: value === 0 ? null : current.hasAdultChildInEducation,
+      childcareSituation: value === 0 ? "not-specified" : current.childcareSituation,
+      singleParent: value === 0 ? null : current.singleParent,
+      missingSupport: value === 0 ? null : current.missingSupport,
+    }));
+  }
+
+  function setChildBirthDate(index: number, value: string) {
+    setProfile((current) => ({
+      ...current,
+      childBirthDates: current.childBirthDates.map((date, childIndex) =>
+        childIndex === index ? value : date,
+      ),
+    }));
+  }
+
+  function setExpectingChild(value: boolean) {
+    setProfile((current) => ({
+      ...current,
+      expectingChild: value,
+      dueDate: value ? current.dueDate : "",
+      employed: value ? current.employed : null,
+      statutoryInsurance: value ? current.statutoryInsurance : null,
+    }));
+  }
+
+  function setSingleParent(value: boolean) {
+    setProfile((current) => ({
+      ...current,
+      singleParent: value,
+      missingSupport: value ? current.missingSupport : null,
     }));
   }
 
@@ -110,7 +144,33 @@ export function CheckClient() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  const canContinue = step !== 1 || profile.children === 0 || profile.youngestAge !== "none";
+  const today = new Date();
+  const todayValue = today.toISOString().slice(0, 10);
+  const hasAdultChildUnder25 = profile.childBirthDates.some((date) => {
+    const age = ageInYears(date, today);
+    return age !== null && age >= 18 && age < 25;
+  });
+  const hasCompleteBirthDates =
+    profile.children === 0 ||
+    (profile.childBirthDates.length === profile.children &&
+      profile.childBirthDates.every((date) => isValidBirthDate(date, today)));
+
+  const canContinue =
+    step === 1
+      ? hasCompleteBirthDates &&
+        (!hasAdultChildUnder25 || profile.hasAdultChildInEducation !== null)
+      : step === 2
+        ? profile.expectingChild !== null &&
+          (!profile.expectingChild || Boolean(profile.dueDate)) &&
+          (profile.children === 0 || profile.childcareSituation !== "not-specified") &&
+          (profile.children === 0 || profile.adults !== 1 || profile.singleParent !== null) &&
+          (!profile.singleParent || profile.missingSupport !== null)
+        : step === 3
+          ? profile.annualTaxableIncomeOver175k !== null &&
+            profile.weeklyWorkingHours !== null
+          : step === 6 && profile.expectingChild
+            ? profile.employed !== null && profile.statutoryInsurance !== null
+            : true;
 
   if (!mounted) return <main className="app-page" />;
 
@@ -154,22 +214,38 @@ export function CheckClient() {
               </div>
               {profile.children > 0 ? (
                 <>
-                  <p className="question-help">Wie alt ist das jüngste Kind?</p>
-                  <div className="option-grid">
-                    {([
-                      ["under1", "Unter 1 Jahr"],
-                      ["oneTo5", "1 bis 5 Jahre"],
-                      ["sixTo11", "6 bis 11 Jahre"],
-                      ["twelveTo17", "12 bis 17 Jahre"],
-                      ["adult", "Alle Kinder sind 18+"],
-                    ] as [YoungestAge, string][]).map(([value, label]) => (
-                      <Choice key={value} selected={profile.youngestAge === value} label={label} onClick={() => update("youngestAge", value)} />
+                  <p className="question-help">
+                    Bitte gib das Geburtsdatum für jedes Kind an. So prüfen wir
+                    Altersgrenzen statt sie zu schätzen.
+                  </p>
+                  <div className="date-grid">
+                    {profile.childBirthDates.map((date, index) => (
+                      <div className="date-field" key={index}>
+                        <label htmlFor={`child-birth-date-${index}`}>
+                          Geburtsdatum Kind {index + 1}
+                        </label>
+                        <input
+                          id={`child-birth-date-${index}`}
+                          type="date"
+                          max={todayValue}
+                          value={date}
+                          onInput={(event) =>
+                            setChildBirthDate(index, event.currentTarget.value)
+                          }
+                        />
+                      </div>
                     ))}
                   </div>
-                  {profile.youngestAge === "adult" ? (
-                    <div style={{ marginTop: 22 }}>
-                      <p className="question-help">Ist mindestens ein Kind unter 25 in Ausbildung oder Studium?</p>
-                      <YesNo value={profile.hasAdultChildInEducation} onChange={(value) => update("hasAdultChildInEducation", value)} />
+                  {hasAdultChildUnder25 ? (
+                    <div className="question-group">
+                      <p className="question-help">
+                        Ist mindestens eines der volljährigen Kinder unter 25 in
+                        Schule, Ausbildung oder Studium?
+                      </p>
+                      <YesNo
+                        value={profile.hasAdultChildInEducation}
+                        onChange={(value) => update("hasAdultChildInEducation", value)}
+                      />
                     </div>
                   ) : null}
                 </>
@@ -182,13 +258,53 @@ export function CheckClient() {
               <p className="question-kicker">Familiensituation</p>
               <h1>Erwartet ihr gerade ein Kind?</h1>
               <p className="question-help">So können wir Elterngeld und Mutterschaftsleistungen rechtzeitig einordnen.</p>
-              <YesNo value={profile.expectingChild} onChange={(value) => update("expectingChild", value)} />
+              <YesNo value={profile.expectingChild} onChange={setExpectingChild} />
+              {profile.expectingChild ? (
+                <div className="question-group">
+                  <div className="date-field">
+                    <label htmlFor="due-date">Voraussichtlicher Geburtstermin</label>
+                    <input
+                      id="due-date"
+                      type="date"
+                      value={profile.dueDate}
+                      onInput={(event) => update("dueDate", event.currentTarget.value)}
+                    />
+                  </div>
+                  <p className="inline-note">
+                    Elterngeld wird erst nach der Geburt beantragt. Das Datum hilft
+                    bei der richtigen zeitlichen Einordnung.
+                  </p>
+                </div>
+              ) : null}
+              {profile.children > 0 ? (
+                <div className="question-group">
+                  <p className="question-help">
+                    Wie sieht die Betreuung des jüngsten Kindes aus?
+                  </p>
+                  <div className="option-grid">
+                    {([
+                      ["self", "Ich/wir betreuen selbst", "Das Kind lebt bei mir/uns und wird persönlich betreut"],
+                      ["shared", "Geteilte Betreuung", "Zum Beispiel zusätzlich Kita, Tagespflege oder Verwandte"],
+                      ["not-personal", "Nicht persönlich betreut", "Das Kind lebt hier, wird aber nicht von mir/uns betreut"],
+                      ["not-in-household", "Anderer Haushalt", "Das Kind lebt nicht mit mir/uns zusammen"],
+                    ] as [ChildcareSituation, string, string][]).map(([value, label, hint]) => (
+                      <Choice
+                        key={value}
+                        selected={profile.childcareSituation === value}
+                        label={label}
+                        hint={hint}
+                        onClick={() => update("childcareSituation", value)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ) : null}
               {profile.children > 0 && profile.adults === 1 ? (
-                <div style={{ marginTop: 28 }}>
+                <div className="question-group">
                   <p className="question-help">Betreust du dein Kind überwiegend allein?</p>
-                  <YesNo value={profile.singleParent} onChange={(value) => update("singleParent", value)} />
+                  <YesNo value={profile.singleParent} onChange={setSingleParent} />
                   {profile.singleParent ? (
-                    <div style={{ marginTop: 24 }}>
+                    <div className="question-group compact">
                       <p className="question-help">Zahlt der andere Elternteil keinen oder zu wenig Unterhalt?</p>
                       <YesNo value={profile.missingSupport} onChange={(value) => update("missingSupport", value)} />
                     </div>
@@ -213,8 +329,36 @@ export function CheckClient() {
               </div>
               <p className="question-help">Liegt euer zu versteuerndes Jahreseinkommen über 175.000 €?</p>
               <YesNo value={profile.annualTaxableIncomeOver175k} onChange={(value) => update("annualTaxableIncomeOver175k", value)} />
-              <p className="question-help">Arbeitet die betreuende Person während des möglichen Elterngeldbezugs mehr als 32 Stunden pro Woche?</p>
-              <YesNo value={profile.worksOver32Hours} onChange={(value) => update("worksOver32Hours", value)} />
+              <div className="number-field question-group">
+                <label htmlFor="weekly-hours">
+                  Geplante Arbeitszeit der antragstellenden Person
+                </label>
+                <div className="number-input-wrap">
+                  <input
+                    id="weekly-hours"
+                    type="number"
+                    inputMode="decimal"
+                    min="0"
+                    max="80"
+                    step="0.5"
+                    value={profile.weeklyWorkingHours ?? ""}
+                    placeholder="z. B. 20"
+                    onChange={(event) =>
+                      update(
+                        "weeklyWorkingHours",
+                        event.target.value === ""
+                          ? null
+                          : Math.max(0, Math.min(80, Number(event.target.value))),
+                      )
+                    }
+                  />
+                  <span>Std. / Woche</span>
+                </div>
+                <p className="inline-note">
+                  Für Elterngeld sind grundsätzlich höchstens 32 Arbeitsstunden
+                  pro Woche zulässig.
+                </p>
+              </div>
             </>
           ) : null}
 

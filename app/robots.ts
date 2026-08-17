@@ -1,5 +1,9 @@
 import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-  return { rules: { userAgent: "*", allow: "/", disallow: "/results" } };
+  return {
+    rules: { userAgent: "*", allow: "/", disallow: "/results" },
+    sitemap: "https://anspruchscheck.de/sitemap.xml",
+    host: "https://anspruchscheck.de",
+  };
 }

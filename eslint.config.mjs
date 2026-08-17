@@ -6,8 +6,8 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   {
-    // Plain anchors keep the application portable across Next.js hosts while
-    // questionnaire state remains safe in localStorage during navigation.
+    // Full-page navigation avoids a known vinext RSC navigation failure while
+    // preserving progressive enhancement and local questionnaire state.
     rules: { "@next/next/no-html-link-for-pages": "off" },
   },
   // Override default ignores of eslint-config-next.

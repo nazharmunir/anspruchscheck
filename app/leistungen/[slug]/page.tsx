@@ -15,6 +15,23 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${benefit.name} prüfen`,
     description: `${benefit.summary} Voraussetzungen, mögliche Höhe, Unterlagen und offizieller nächster Schritt.`,
+    alternates: { canonical: `/leistungen/${benefit.slug}` },
+    openGraph: {
+      title: `${benefit.name} prüfen | AnspruchsCheck.de`,
+      description: benefit.summary,
+      url: `/leistungen/${benefit.slug}`,
+      siteName: "AnspruchsCheck.de",
+      locale: "de_DE",
+      type: "website",
+      images: [
+        {
+          url: "/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: "AnspruchsCheck.de – Staatliche Leistungen klar prüfen",
+        },
+      ],
+    },
   };
 }
 

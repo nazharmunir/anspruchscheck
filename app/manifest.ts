@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Anspruch – Leistungen einfach prüfen",
-    short_name: "Anspruch",
+    name: "AnspruchsCheck.de – Leistungen einfach prüfen",
+    short_name: "AnspruchsCheck",
     description: "Ein verständlicher erster Check für staatliche Leistungen in Deutschland.",
     start_url: "/",
     display: "standalone",

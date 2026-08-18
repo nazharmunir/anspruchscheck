@@ -76,10 +76,21 @@ export default function PrivacyPage() {
             Google-Gmail-Postfach genutzt.
           </p>
 
-          <h2>5. Keine Analyse- oder Werbe-Cookies</h2>
+          <h2>5. Vercel Web Analytics</h2>
           <p>
-            Diese MVP-Version nutzt keine Analyse-, Marketing- oder
-            Profiling-Dienste. Es werden keine entsprechenden Cookies gesetzt.
+            Zur anonymisierten Reichweitenmessung verwenden wir Vercel Web Analytics.
+            Dabei werden Seitenaufrufe und technische Nutzungsinformationen wie die
+            aufgerufene Seite, Referrer, ungefähre geografische Region, Browser,
+            Betriebssystem und Gerätetyp in aggregierter Form ausgewertet. Die im
+            Leistungs-Check eingegebenen Antworten werden hierfür nicht übertragen.
+          </p>
+          <p>
+            Vercel Web Analytics verwendet nach Angaben von Vercel keine
+            Drittanbieter-Cookies und speichert keine dauerhafte Kennung, mit der
+            Besucher über verschiedene Websites hinweg verfolgt werden könnten.
+            Die Reichweitenmessung dient der Verbesserung und technischen
+            Weiterentwicklung des Angebots. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f
+            DSGVO.
           </p>
 
           <h2>6. Externe Links</h2>

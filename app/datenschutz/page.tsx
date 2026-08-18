@@ -16,7 +16,7 @@ export default function PrivacyPage() {
         <div className="legal-content">
           <p className="section-kicker">Rechtliches</p>
           <h1>Datenschutz</h1>
-          <p>Stand: 17. August 2026</p>
+          <p>Stand: 18. August 2026</p>
 
           <h2>1. Verantwortlicher</h2>
           <address className="legal-address">
@@ -36,10 +36,9 @@ export default function PrivacyPage() {
           <p>
             Deine Antworten – darunter Haushaltsgröße, Geburtsdatum oder
             voraussichtlicher Geburtstermin, Betreuungssituation, Einkommen und
-            Arbeitszeit – werden ausschließlich
-            im lokalen Speicher deines Browsers abgelegt. Sie werden nicht an uns
-            übertragen, nicht in einem Nutzerkonto gespeichert und nicht für
-            Werbung oder Profiling verwendet.
+            Arbeitszeit – werden ausschließlich im lokalen Speicher deines Browsers
+            abgelegt. Sie werden nicht an uns übertragen, nicht in einem Nutzerkonto
+            gespeichert und nicht für Werbung oder Profiling verwendet.
           </p>
           <p>
             Wir verwenden dafür den Schlüssel <code>anspruch-profile:v2</code>.
@@ -51,18 +50,18 @@ export default function PrivacyPage() {
 
           <h2>3. Technische Bereitstellung und Server-Protokolle</h2>
           <p>
-            Die Website wird über eine von OpenAI bereitgestellte
-            Hosting-Infrastruktur auf Cloudflare-Technik ausgeliefert. Beim Aufruf
-            können technisch notwendige Verbindungsdaten verarbeitet werden,
-            insbesondere IP-Adresse, Zeitpunkt, angeforderte Seite,
-            Referrer-Informationen sowie Browser- und Geräteangaben. Zweck ist die
-            sichere, stabile und missbrauchsgeschützte Bereitstellung der Website.
-            Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.
+            Die Website wird über die Hosting-Infrastruktur von Vercel
+            bereitgestellt. Beim Aufruf können technisch notwendige
+            Verbindungsdaten verarbeitet werden, insbesondere IP-Adresse,
+            Zeitpunkt, angeforderte Seite, Referrer-Informationen sowie Browser-
+            und Geräteangaben. Zweck ist die sichere, stabile und
+            missbrauchsgeschützte Bereitstellung der Website. Rechtsgrundlage ist
+            Art. 6 Abs. 1 lit. f DSGVO.
           </p>
           <p>
             Dabei kann eine Verarbeitung durch Dienstleister außerhalb der EU,
             insbesondere in den USA, stattfinden. Die konkreten
-            Auftragsverarbeitungs- und Übermittlungsgarantien müssen vor der
+            Auftragsverarbeitungs- und Übermittlungsgarantien müssen vor einer
             geschäftsmäßigen Vermarktung abschließend geprüft und dokumentiert
             werden.
           </p>
@@ -78,10 +77,17 @@ export default function PrivacyPage() {
           </p>
 
           <h2>5. Keine Analyse- oder Werbe-Cookies</h2>
-          <p>Diese MVP-Version nutzt keine Analyse-, Marketing- oder Profiling-Dienste. Es werden keine entsprechenden Cookies gesetzt.</p>
+          <p>
+            Diese MVP-Version nutzt keine Analyse-, Marketing- oder
+            Profiling-Dienste. Es werden keine entsprechenden Cookies gesetzt.
+          </p>
 
           <h2>6. Externe Links</h2>
-          <p>Wenn du eine offizielle Behördenseite öffnest, gelten dort die Datenschutzbestimmungen des jeweiligen Anbieters. Externe Seiten öffnen sich erst durch deine aktive Auswahl.</p>
+          <p>
+            Wenn du eine offizielle Behördenseite öffnest, gelten dort die
+            Datenschutzbestimmungen des jeweiligen Anbieters. Externe Seiten öffnen
+            sich erst durch deine aktive Auswahl.
+          </p>
 
           <h2>7. Deine Rechte</h2>
           <p>

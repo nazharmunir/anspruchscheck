@@ -17,10 +17,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: `${benefit.summary} Voraussetzungen, mögliche Höhe, Unterlagen und offizieller nächster Schritt.`,
     alternates: { canonical: `/leistungen/${benefit.slug}` },
     openGraph: {
-      title: `${benefit.name} prüfen | AnspruchsCheck.de`,
+      title: `${benefit.name} prüfen | AnspruchsCheck`,
       description: benefit.summary,
       url: `/leistungen/${benefit.slug}`,
-      siteName: "AnspruchsCheck.de",
+      siteName: "AnspruchsCheck",
       locale: "de_DE",
       type: "website",
       images: [
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
           url: "/og-image.png",
           width: 1200,
           height: 630,
-          alt: "AnspruchsCheck.de – Staatliche Leistungen klar prüfen",
+          alt: "AnspruchsCheck – Staatliche Leistungen klar prüfen",
         },
       ],
     },
@@ -40,8 +40,39 @@ export default async function BenefitDetailPage({ params }: { params: Promise<{ 
   const benefit = benefitBySlug.get(slug as BenefitSlug);
   if (!benefit) notFound();
 
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "AnspruchsCheck",
+        item: "https://anspruchscheck.de/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Leistungen",
+        item: "https://anspruchscheck.de/#leistungen",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: benefit.name,
+        item: `https://anspruchscheck.de/leistungen/${benefit.slug}`,
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbStructuredData).replace(/</g, "\\u003c"),
+        }}
+      />
       <SiteHeader />
       <main className="subpage-main">
         <section className="benefit-hero">

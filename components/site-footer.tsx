@@ -22,7 +22,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>© 2026 Anspruch</p>
+        <p>© 2026 AnspruchsCheck</p>
         <p>Orientierung – keine verbindliche Rechts- oder Leistungsberatung.</p>
       </div>
     </footer>

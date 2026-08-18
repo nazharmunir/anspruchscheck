@@ -19,11 +19,11 @@ export default function Home() {
             <div className="hero-copy">
               <div className="eyebrow-pill">
                 <span className="eyebrow-dot" />
-                Kostenlos · ohne Konto · etwa 4 Minuten
+                AnspruchsCheck · kostenlos · ohne Konto · etwa 4 Minuten
               </div>
               <h1>Welche Unterstützung lässt du gerade liegen?</h1>
               <p className="hero-lead">
-                Beantworte ein paar einfache Fragen. Anspruch zeigt dir passende
+                Beantworte ein paar einfache Fragen. AnspruchsCheck zeigt dir passende
                 Leistungen, mögliche Beträge, typische Unterlagen und den
                 offiziellen nächsten Schritt.
               </p>
@@ -97,7 +97,7 @@ export default function Home() {
                 <p className="section-kicker">In drei Schritten</p>
                 <h2>Vom Fragezeichen zum klaren nächsten Schritt.</h2>
               </div>
-              <p>Anspruch sortiert komplexe Regeln in eine verständliche persönliche Übersicht.</p>
+              <p>AnspruchsCheck sortiert komplexe Regeln in eine verständliche persönliche Übersicht.</p>
             </div>
             <div className="steps-grid">
               <article className="step-card">
@@ -141,7 +141,7 @@ export default function Home() {
             </div>
             <div className="principles-copy">
               <p>
-                Anspruch verwendet nachvollziehbare Regeln und kennzeichnet Ergebnisse als
+                AnspruchsCheck verwendet nachvollziehbare Regeln und kennzeichnet Ergebnisse als
                 <strong> starker Treffer</strong>, <strong>prüfen lohnt sich</strong> oder
                 <strong> aktuell kein Treffer</strong>.
               </p>

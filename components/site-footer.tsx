@@ -10,9 +10,10 @@ export function SiteFooter() {
         </div>
         <div className="footer-links">
           <div>
-            <p className="footer-heading">Produkt</p>
+            <p className="footer-heading">Produkt &amp; Ratgeber</p>
             <a href="/check">Anspruch prüfen</a>
             <a href="/#leistungen">Leistungen</a>
+            <a href="/ratgeber/wohngeld-anspruch-2026">Wohngeld Anspruch 2026</a>
             <a href="/methodik">Methodik &amp; Quellen</a>
           </div>
           <div>

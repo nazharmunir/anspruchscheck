@@ -13,9 +13,11 @@ export function SiteFooter() {
             <p className="footer-heading">Produkt</p>
             <a href="/check">Anspruch prüfen</a>
             <a href="/#leistungen">Leistungen</a>
+            <a href="/methodik">Methodik &amp; Quellen</a>
           </div>
           <div>
-            <p className="footer-heading">Rechtliches</p>
+            <p className="footer-heading">Über &amp; Rechtliches</p>
+            <a href="/ueber">Über AnspruchsCheck</a>
             <a href="/datenschutz">Datenschutz</a>
             <a href="/impressum">Impressum</a>
           </div>

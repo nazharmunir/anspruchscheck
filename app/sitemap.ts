@@ -14,6 +14,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   );
 
+  const guideRoutes = [
+    {
+      url: `${baseUrl}/ratgeber/wohngeld-anspruch-2026`,
+      lastModified: new Date("2026-08-18T00:00:00.000Z"),
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    },
+  ];
+
   const benefitRoutes = benefits.map((benefit) => ({
     url: `${baseUrl}/leistungen/${benefit.slug}`,
     lastModified: new Date("2026-08-18T00:00:00.000Z"),
@@ -21,5 +30,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...benefitRoutes];
+  return [...staticRoutes, ...guideRoutes, ...benefitRoutes];
 }
